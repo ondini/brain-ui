@@ -61,8 +61,8 @@ export default function SubjectCard({ subject }) {
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <h3 style={{ fontWeight: 600, color: '#1A1A18', margin: 0, fontSize: 15, fontFamily: 'monospace' }}>
-          {subject.id}
+        <h3 style={{ fontWeight: 600, color: '#1A1A18', margin: 0, fontSize: 15 }}>
+          {subject.name ?? subject.id}
         </h3>
         <span style={{ fontSize: 11, color: '#B5B3AA' }}>
           {subject.processed_at

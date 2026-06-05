@@ -106,6 +106,7 @@ export default function SubjectDetail() {
   const { subjectId } = useParams();
   const { data, loading, error } = useBrainData(subjectId);
   const [selectedParcel, setSelectedParcel] = useState(null);
+  const [selectedRow, setSelectedRow] = useState(null);
   const [networkHighlight, setNetworkHighlight] = useState(null);
   const [hoveredEdge, setHoveredEdge] = useState(null);
   const [showLinks, setShowLinks] = useState(false);
@@ -114,6 +115,7 @@ export default function SubjectDetail() {
 
   useEffect(() => {
     setSelectedParcel(null);
+    setSelectedRow(null);
     setNetworkHighlight(null);
   }, [subjectId]);
 
@@ -169,8 +171,9 @@ export default function SubjectDetail() {
                 <ConnectivityMatrix
                   data={data}
                   selectedParcel={selectedParcel}
+                  selectedRow={selectedRow}
                   networkHighlight={networkHighlight}
-                  onParcelSelect={setSelectedParcel}
+                  onParcelSelect={(col, row) => { setSelectedParcel(col); setSelectedRow(row); }}
                   onEdgeHover={setHoveredEdge}
                 />
               </Suspense>
@@ -188,7 +191,7 @@ export default function SubjectDetail() {
                   networkHighlight={networkHighlight}
                   hoveredEdge={hoveredEdge}
                   showLinks={showLinks}
-                  onParcelSelect={setSelectedParcel}
+                  onParcelSelect={parcel => { setSelectedParcel(parcel); setSelectedRow(parcel); }}
                 />
               </Suspense>
             </VisualizationCard>

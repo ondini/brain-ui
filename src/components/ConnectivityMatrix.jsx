@@ -4,7 +4,7 @@ import { networkColor } from '../utils/networkColors';
 import { getParcelLabel } from '../utils/parcelLabels';
 
 // Shapes for the full 116×116 matrix view
-function buildFullShapes(data, selectedParcel) {
+function buildFullShapes(data, selectedParcel, selectedRow) {
   const { parcels, network_index, connectivity_matrix } = data;
   const n = connectivity_matrix.length;
   const shapes = [];
@@ -24,27 +24,31 @@ function buildFullShapes(data, selectedParcel) {
   }
 
   if (selectedParcel !== null) {
+    const row = selectedRow ?? selectedParcel;
     shapes.push(
       { type: 'line', x0: selectedParcel, y0: -0.5, x1: selectedParcel, y1: n - 0.5, line: { color: '#1A1A18', width: 1.5 } },
-      { type: 'line', x0: -0.5, y0: selectedParcel, x1: n - 0.5, y1: selectedParcel, line: { color: '#1A1A18', width: 1.5 } },
+      { type: 'line', x0: -0.5, y0: row, x1: n - 0.5, y1: row, line: { color: '#1A1A18', width: 1.5 } },
     );
   }
   return shapes;
 }
 
 // Crosshair shapes for the filtered sub-matrix view
-function buildFilteredShapes(filteredIds, selectedParcel) {
+function buildFilteredShapes(filteredIds, selectedParcel, selectedRow) {
   const n = filteredIds.length;
   if (selectedParcel === null) return [];
-  const idx = filteredIds.indexOf(selectedParcel);
-  if (idx === -1) return [];
+  const colIdx = filteredIds.indexOf(selectedParcel);
+  if (colIdx === -1) return [];
+  const rowGlobal = selectedRow ?? selectedParcel;
+  const rowIdx = filteredIds.indexOf(rowGlobal);
+  const rowPos = rowIdx !== -1 ? rowIdx : colIdx;
   return [
-    { type: 'line', x0: idx, y0: -0.5, x1: idx, y1: n - 0.5, line: { color: '#1A1A18', width: 1.5 } },
-    { type: 'line', x0: -0.5, y0: idx, x1: n - 0.5, y1: idx, line: { color: '#1A1A18', width: 1.5 } },
+    { type: 'line', x0: colIdx, y0: -0.5, x1: colIdx, y1: n - 0.5, line: { color: '#1A1A18', width: 1.5 } },
+    { type: 'line', x0: -0.5, y0: rowPos, x1: n - 0.5, y1: rowPos, line: { color: '#1A1A18', width: 1.5 } },
   ];
 }
 
-export default function ConnectivityMatrix({ data, selectedParcel, networkHighlight, onParcelSelect, onEdgeHover }) {
+export default function ConnectivityMatrix({ data, selectedParcel, selectedRow, networkHighlight, onParcelSelect, onEdgeHover }) {
   const divRef = useRef(null);
   const initializedRef = useRef(false);
 
@@ -68,8 +72,8 @@ export default function ConnectivityMatrix({ data, selectedParcel, networkHighli
 
     const n = displayMatrix.length;
     const shapes = filtered
-      ? buildFilteredShapes(filtered.ids, selectedParcel)
-      : buildFullShapes(data, selectedParcel);
+      ? buildFilteredShapes(filtered.ids, selectedParcel, selectedRow)
+      : buildFullShapes(data, selectedParcel, selectedRow);
 
     const networkHighlightColor = networkHighlight ? networkColor(networkHighlight) : null;
 
@@ -108,7 +112,11 @@ export default function ConnectivityMatrix({ data, selectedParcel, networkHighli
     divRef.current.on('plotly_click', e => {
       if (!e.points?.[0]) return;
       const xi = e.points[0].x;
-      onParcelSelect(filtered ? filtered.ids[xi] : xi);
+      const yi = e.points[0].y;
+      onParcelSelect(
+        filtered ? filtered.ids[xi] : xi,
+        filtered ? filtered.ids[yi] : yi,
+      );
     });
 
     if (onEdgeHover) {
@@ -136,10 +144,10 @@ export default function ConnectivityMatrix({ data, selectedParcel, networkHighli
   useEffect(() => {
     if (!divRef.current || !initializedRef.current || !data) return;
     const shapes = filtered
-      ? buildFilteredShapes(filtered.ids, selectedParcel)
-      : buildFullShapes(data, selectedParcel);
+      ? buildFilteredShapes(filtered.ids, selectedParcel, selectedRow)
+      : buildFullShapes(data, selectedParcel, selectedRow);
     Plotly.relayout(divRef.current, { shapes });
-  }, [selectedParcel]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [selectedParcel, selectedRow]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!data) return null;
 

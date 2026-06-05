@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 100" width="3200" height="1000">
+    <!-- Current Tiesa logo: triangle in light grey + dark wordmark -->
+    <!-- For use on LIGHT backgrounds -->
+    <svg x="15" y="20" width="60" height="60" viewBox="0 0 100 90" preserveAspectRatio="xMidYMid meet">
+        <path d="M58 22L85 69Q93 83 77 83L23 83Q7 83 15 69L42 22Q50 8 58 22Z"
+              fill="none" stroke="#B5B3AA" stroke-width="7"/>
+    </svg>
+    <text x="92" y="75" font-family="Zalando Sans Expanded, sans-serif" font-weight="700" font-size="60" letter-spacing="1" fill="#1A1A18">Tiesa</text>
+</svg>

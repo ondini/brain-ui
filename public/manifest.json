@@ -1,0 +1,20 @@
+{
+  "subjects": [
+    {
+      "id": "raph",
+      "processed_at": "2026-06-04T15:50:43Z",
+      "dmn_connectivity": 0.192,
+      "fpn_connectivity": 0.1493,
+      "dmn_fpn_anticorrelation": 0.0751,
+      "dan_connectivity": 0.1703
+    },
+    {
+      "id": "raph2",
+      "processed_at": "2026-06-04T16:58:27Z",
+      "dmn_connectivity": 0.0747,
+      "fpn_connectivity": 0.041,
+      "dmn_fpn_anticorrelation": 0.0241,
+      "dan_connectivity": 0.2271
+    }
+  ]
+}

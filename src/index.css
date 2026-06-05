@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  background-color: #F5F3EF;
+  color: #1A1A18;
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #ECEAE4; }
+::-webkit-scrollbar-thumb { background: #C5C2BA; border-radius: 3px; }
+
+.scene-nav-info { display: none !important; }
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.tiesa-spinner {
+  animation: spin 0.8s linear infinite;
+}

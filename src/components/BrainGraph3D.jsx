@@ -270,7 +270,7 @@ export default function BrainGraph3D({ data, selectedParcel, networkHighlight, h
       {/* Legend overlay */}
       <div style={{
         position: 'absolute', bottom: 14, left: 12,
-        background: 'rgba(8,8,14,0.78)', backdropFilter: 'blur(8px)',
+        background: 'rgba(8,8,14,0.90)',
         border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8,
         padding: '8px 12px', display: 'flex', flexDirection: 'column', gap: 5,
         pointerEvents: 'none',

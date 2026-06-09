@@ -3,7 +3,7 @@ export default function InfoPanel({ onClose }) {
     <div
       style={{
         position: 'fixed', inset: 0, zIndex: 50,
-        background: 'rgba(26,26,24,0.4)', backdropFilter: 'blur(4px)',
+        background: 'rgba(26,26,24,0.4)', backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: 16,
       }}
